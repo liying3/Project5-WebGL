@@ -25,6 +25,15 @@ PART 1
 
 **Features**
 
+The base code shows an example of how to gamma correct the nighttime texture:
+
+```glsl
+float gammaCorrect = 1/1.2;
+vec4 nightColor = pow(texture2D(u_Night, v_Texcoord), vec4(gammaCorrect));
+```
+
+Fee
+
 * Sin wave
 ```glsl
 	float s_contrib = sin(position.x*2.0*3.14159 + u_time);
