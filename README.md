@@ -119,7 +119,6 @@ From the following chart, we can tell that, it costs most time for shader initia
 As for animation each frame, it has average 48 FPS.
 
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part2/fps.JPG)
-![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part2/timing.JPG)
 
 -------------------------------------------------------------------------------
 THIRD PARTY CODE POLICY
@@ -135,7 +134,7 @@ It's a library to visualize realize fps and timing.
 https://github.com/ashima/webgl-noise/blob/master/src/classicnoise3D.glsl
 
 I use the perlin noise to get an offset position when implementing water animation.
+
 ```glsl
-    float noise = perlinNoise(v_Position+u_time);
-	```
-	
+float noise = perlinNoise(v_Position+u_time);
+```
