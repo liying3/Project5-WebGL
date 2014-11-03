@@ -82,6 +82,7 @@ Implemented the following basic features:
 * Moving clouds
 
 Here are some rendered images:
+
 Bump mapped terrain
 
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part2/bump.JPG)
