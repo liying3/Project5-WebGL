@@ -31,6 +31,7 @@ PART 1
 	float t_contrib = cos(position.y*2.0*3.14159 + u_time);
 	float height = s_contrib*t_contrib;
 	```
+	
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part1/sin.JPG)
 
 * Sin wave 2
@@ -38,6 +39,7 @@ PART 1
     float dist = distance(position, vec2(0.5,0.5));
 	float height = sin(u_time - dist) / (u_time - dist);
 	```
+	
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part1/sin2.JPG)
 
 * Simple Butterfly
@@ -45,6 +47,7 @@ PART 1
     float t_contrib = cos( (0.5-position.y) * u_time);
     float height = t_contrib * 0.5 * (1.0 + abs(0.5-position.y)/0.5 );
 	```
+	
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part1/bt.JPG)
 
 * Complex Butterfly
@@ -53,6 +56,7 @@ I use a butterfly function from Wolfram, http://mathworld.wolfram.com/ButterflyF
     float tmp = (pow(position.x,2.0) - pow(position.y,2.0)) / (pow(position.x,2.0) + pow(position.y,2.0));
     float height = tmp * sin((position.x + position.y) / u_time);
 	```
+	
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part1/bt2.JPG)
 
 * user interface
@@ -126,3 +130,4 @@ I use the perlin noise to get an offset position when implementing water animati
 ```glsl
     float noise = perlinNoise(v_Position+u_time);
 	```
+	
