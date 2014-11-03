@@ -38,9 +38,9 @@
             height = s_contrib*t_contrib;
           }
           else if (u_type == 1) {
-            float dis = distance(position, vec2(0.5,0.5)) * 30.0;
-		    float t = abs(u_time - dis) < 0.00001 ? 0.00001 : (u_time - dis);
-		    height = clamp(sin(u_time - dis) / t, 0.0, 0.2);
+            float dist = distance(position, vec2(0.5,0.5)) * 30.0;
+		    float t = abs(u_time - dist) < 0.00001 ? 0.00001 : (u_time - dist);
+		    height = clamp(sin(u_time - dist) / t, 0.0, 0.2);
           }
           else if (u_type == 2) {
             float t_contrib = cos( (0.5-position.y) * u_time);
