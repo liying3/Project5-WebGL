@@ -56,6 +56,17 @@
     var u_BumpLocation;
     var u_timeLocation;
 
+	//stas.js
+	var statsInitShader = new Stats();
+	statsInitShader.setMode(1); // 0: fps, 1: ms
+	statsInitShader.domElement.style.position = 'absolute';
+	statsInitShader.domElement.style.right = '0px';
+	statsInitShader.domElement.style.top = '0';
+	document.body.appendChild(statsInitShader.domElement );
+	var initS = document.createElement('div');
+	initS.innerHTML = 'init shader';
+	statsInitShader.domElement.appendChild(initS);
+	statsInitShader.begin();
     (function initializeShader() {
         var vs = getShaderSource(document.getElementById("vs"));
         var fs = getShaderSource(document.getElementById("fs"));
@@ -79,6 +90,7 @@
 
         gl.useProgram(program);
     })();
+	statsInitShader.end();
 
     var dayTex   = gl.createTexture();
     var bumpTex  = gl.createTexture();
@@ -87,6 +99,17 @@
     var lightTex = gl.createTexture();
     var specTex  = gl.createTexture();
 
+	//stas.js
+	var statsInitTexture = new Stats();
+	statsInitTexture.setMode(1); // 0: fps, 1: ms
+	statsInitTexture.domElement.style.position = 'absolute';
+	statsInitTexture.domElement.style.right = '0px';
+	statsInitTexture.domElement.style.top = '80px';
+	document.body.appendChild( statsInitTexture.domElement );
+	var initT = document.createElement('div');
+	initT.innerHTML = 'init texture';
+	statsInitTexture.domElement.appendChild(initT);
+	statsInitTexture.begin();
     function initLoadedTexture(texture){
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true);
@@ -97,9 +120,22 @@
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
         gl.bindTexture(gl.TEXTURE_2D, null);
     }
+	statsInitTexture.end();
 
     var numberOfIndices;
-
+	
+	//stas.js
+	var statsInitSphere = new Stats();
+	statsInitSphere.setMode(1); // 0: fps, 1: ms
+	statsInitSphere.domElement.style.position = 'absolute';
+	statsInitSphere.domElement.style.right = '0px';
+	statsInitSphere.domElement.style.top = '160px';
+	document.body.appendChild( statsInitSphere.domElement );
+	var initSphere = document.createElement('div');
+	initSphere.innerHTML = 'init sphere';
+	statsInitSphere.domElement.appendChild(initSphere);
+	statsInitSphere.begin();
+	
     (function initializeSphere() {
         function uploadMesh(positions, texCoords, indices) {
             // Positions
@@ -174,6 +210,7 @@
         uploadMesh(positions, texCoords, indices);
         numberOfIndices = indicesIndex;
     })();
+	statsInitSphere.end();
 
     var time = 0;
     var mouseLeftDown = false;
@@ -233,10 +270,21 @@
     document.onmouseup = handleMouseUp;
     document.onmousemove = handleMouseMove;
 
-
+	//stas.js
+	var statsAnimate = new Stats();
+	statsAnimate.setMode(1); // 0: fps, 1: ms
+	statsAnimate.domElement.style.position = 'absolute';
+	statsAnimate.domElement.style.right = '0';
+	statsAnimate.domElement.style.top = '240px';
+	document.body.appendChild( statsAnimate.domElement );
+	var anim = document.createElement('div');
+	anim.innerHTML = 'animate';
+	statsAnimate.domElement.appendChild(anim);
+	
     function animate() {
         ///////////////////////////////////////////////////////////////////////////
         // Update
+		statsAnimate.begin();
 
         var model = mat4.create();
         mat4.identity(model);
@@ -290,6 +338,9 @@
 
         time += 0.001;
 		gl.uniform1f(u_timeLocation, time);
+		
+		statsAnimate.end();
+		
         window.requestAnimFrame(animate);
     }
 
