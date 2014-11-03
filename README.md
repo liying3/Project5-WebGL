@@ -24,47 +24,44 @@ PART 1
 [![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part1/video%20cover.JPG)](http://youtu.be/xA6fc0ufyLs)
 
 **Features**
-
-The base code shows an example of how to gamma correct the nighttime texture:
-
-```glsl
-float gammaCorrect = 1/1.2;
-vec4 nightColor = pow(texture2D(u_Night, v_Texcoord), vec4(gammaCorrect));
-```
-
-Fee
+There are four types of animation in this part.
 
 * Sin wave
+
 ```glsl
-	float s_contrib = sin(position.x*2.0*3.14159 + u_time);
-	float t_contrib = cos(position.y*2.0*3.14159 + u_time);
-	float height = s_contrib*t_contrib;
-	```
+float s_contrib = sin(position.x*2.0*3.14159 + u_time);
+float t_contrib = cos(position.y*2.0*3.14159 + u_time);
+float height = s_contrib*t_contrib;
+```
 	
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part1/sin.JPG)
 
 * Sin wave 2
+
 ```glsl
-    float dist = distance(position, vec2(0.5,0.5));
-	float height = sin(u_time - dist) / (u_time - dist);
-	```
-	
+float dist = distance(position, vec2(0.5,0.5));
+float height = sin(u_time - dist) / (u_time - dist);
+```
+
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part1/sin2.JPG)
 
 * Simple Butterfly
+
 ```glsl
-    float t_contrib = cos( (0.5-position.y) * u_time);
-    float height = t_contrib * 0.5 * (1.0 + abs(0.5-position.y)/0.5 );
-	```
+float t_contrib = cos( (0.5-position.y) * u_time);
+float height = t_contrib * 0.5 * (1.0 + abs(0.5-position.y)/0.5 );
+```
 	
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part1/bt.JPG)
 
 * Complex Butterfly
+
 I use a butterfly function from Wolfram, http://mathworld.wolfram.com/ButterflyFunction.html
+
 ```glsl
-    float tmp = (pow(position.x,2.0) - pow(position.y,2.0)) / (pow(position.x,2.0) + pow(position.y,2.0));
-    float height = tmp * sin((position.x + position.y) / u_time);
-	```
+float tmp = (pow(position.x,2.0) - pow(position.y,2.0)) / (pow(position.x,2.0) + pow(position.y,2.0));
+float height = tmp * sin((position.x + position.y) / u_time);
+```
 	
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part1/bt2.JPG)
 
