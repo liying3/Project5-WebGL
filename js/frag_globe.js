@@ -55,13 +55,22 @@
     var u_EarthSpecLocation;
     var u_BumpLocation;
     var u_timeLocation;
+	
+    var cloudDisplay = true;
+	var u_cloudDisLocation;
+	var movingCloudDisplay = true;
+	var u_mvCloudDisLocation;
+	var movingOceanDisplay = true;
+	var u_mvOceanDisLocation;
+	var bumpDisplay = true;
+	var u_bumpDisLocation;
 
 	//stas.js
 	var statsInitShader = new Stats();
 	statsInitShader.setMode(1); // 0: fps, 1: ms
 	statsInitShader.domElement.style.position = 'absolute';
 	statsInitShader.domElement.style.right = '0px';
-	statsInitShader.domElement.style.top = '0';
+	statsInitShader.domElement.style.top = '160px';
 	document.body.appendChild(statsInitShader.domElement );
 	var initS = document.createElement('div');
 	initS.innerHTML = 'init shader';
@@ -87,6 +96,11 @@
         u_BumpLocation = gl.getUniformLocation(program,"u_Bump");
         u_timeLocation = gl.getUniformLocation(program,"u_time");
         u_CameraSpaceDirLightLocation = gl.getUniformLocation(program,"u_CameraSpaceDirLight");
+		
+		u_cloudDisLocation = gl.getUniformLocation(program, "u_cloudDisplay");
+		u_mvCloudDisLocation = gl.getUniformLocation(program, "u_movingCloudDisplay");
+		u_mvOceanDisLocation = gl.getUniformLocation(program, "u_movingOceanDisplay");
+		u_bumpDisLocation = gl.getUniformLocation(program, "u_bumpDisplay");
 
         gl.useProgram(program);
     })();
@@ -104,7 +118,7 @@
 	statsInitTexture.setMode(1); // 0: fps, 1: ms
 	statsInitTexture.domElement.style.position = 'absolute';
 	statsInitTexture.domElement.style.right = '0px';
-	statsInitTexture.domElement.style.top = '80px';
+	statsInitTexture.domElement.style.top = '240px';
 	document.body.appendChild( statsInitTexture.domElement );
 	var initT = document.createElement('div');
 	initT.innerHTML = 'init texture';
@@ -129,7 +143,7 @@
 	statsInitSphere.setMode(1); // 0: fps, 1: ms
 	statsInitSphere.domElement.style.position = 'absolute';
 	statsInitSphere.domElement.style.right = '0px';
-	statsInitSphere.domElement.style.top = '160px';
+	statsInitSphere.domElement.style.top = '320';
 	document.body.appendChild( statsInitSphere.domElement );
 	var initSphere = document.createElement('div');
 	initSphere.innerHTML = 'init sphere';
@@ -275,7 +289,7 @@
 	statsAnimate.setMode(1); // 0: fps, 1: ms
 	statsAnimate.domElement.style.position = 'absolute';
 	statsAnimate.domElement.style.right = '0';
-	statsAnimate.domElement.style.top = '240px';
+	statsAnimate.domElement.style.top = '400px';
 	document.body.appendChild( statsAnimate.domElement );
 	var anim = document.createElement('div');
 	anim.innerHTML = 'animate';
@@ -339,6 +353,11 @@
         time += 0.001;
 		gl.uniform1f(u_timeLocation, time);
 		
+		gl.uniform1i(u_cloudDisLocation, cloudDisplay);
+		gl.uniform1i(u_mvCloudDisLocation, movingCloudDisplay);
+		gl.uniform1i(u_mvOceanDisLocation, movingOceanDisplay);
+		gl.uniform1i(u_bumpDisLocation, bumpDisplay);
+		
 		statsAnimate.end();
 		
         window.requestAnimFrame(animate);
@@ -358,6 +377,28 @@
         }
         texture.image.src = src;
     }
+	
+	
+	function config() {
+      this.cloud = cloudDisplay; // RGB array
+	  this.movingCloud = movingCloudDisplay;
+	  this.movingOcean = movingOceanDisplay;
+	  this.bump = bumpDisplay;
+    }
+	var gui = new dat.GUI();
+    var cong = new config();
+	gui.add(cong, 'cloud').onChange(function () {
+		cloudDisplay = cong.cloudDisplay;
+	});
+	gui.add(cong, 'movingCloud').onChange(function () {
+		movingCloudDisplay = cong.movingCloud;
+	});
+	gui.add(cong, 'movingOcean').onChange(function () {
+		movingOceanDisplay = cong.movingOcean;
+	});
+	gui.add(cong, 'bump').onChange(function () {
+		bumpDisplay = cong.bump;
+	});
 
     initializeTexture(dayTex, "assets/earthmap1024.png");
     initializeTexture(bumpTex, "assets/earthbump1024.png");

@@ -20,6 +20,8 @@
 
     uniform float u_time;
 
+    uniform int u_type;
+
     uniform vec3 u_minColor;
     uniform vec3 u_maxColor;
 
@@ -28,9 +30,26 @@
     void main(void)
     {
             // NOTE : according to the WebGL standard, 0.0f is not accepted
-          float s_contrib = sin(position.x*2.0*3.14159 + u_time);
-          float t_contrib = cos(position.y*2.0*3.14159 + u_time);
-          float height = s_contrib*t_contrib;
+          float height = 0.0;
+
+          if (u_type == 0){
+            float s_contrib = sin(position.x*2.0*3.14159 + u_time);
+            float t_contrib = cos(position.y*2.0*3.14159 + u_time);
+            height = s_contrib*t_contrib;
+          }
+          else if (u_type == 1) {
+            float dis = distance(position, vec2(0.5,0.5)) * 30.0;
+		    float t = abs(u_time - dis) < 0.00001 ? 0.00001 : (u_time - dis);
+		    height = clamp(sin(u_time - dis) / t, 0.0, 0.2);
+          }
+          else if (u_type == 2) {
+            float t_contrib = cos( (0.5-position.y) * u_time);
+            height = t_contrib * 0.5 * (1.0 + abs(0.5-position.y)/0.5 );
+          }
+          else if (u_type == 3) {
+            float tmp = (pow(position.x,2.0) - pow(position.y,2.0)) / (pow(position.x,2.0) + pow(position.y,2.0));
+            height = tmp * sin((position.x + position.y) / u_time);
+          }
 
             // NOTE : gl_Position is always a vec4
 		  gl_Position = u_modelViewPerspective * vec4(vec3(position, height), 1.0);
@@ -82,22 +101,47 @@
 
   var minColor = [1.0 * 255, 0.2 * 255, 0.0 * 255];
   var maxColor = [0.0 * 255, 0.8 * 255, 1.0 * 255];
+  
+  var u_typeLocation;
+  var type = 0;
+  var timeDelt = 0.05;
 
-  function colorPanel() {
+  function config() {
       this.minColor = minColor; // RGB array
       this.maxColor = maxColor; // RGB with alpha
+      this.type = 0;
   }
     
   // Function called when the window is loaded
   window.onload = function() {
     // Add GUI component 
       var gui = new dat.GUI();
-      var colorPicker = new colorPanel();
-      gui.addColor(colorPicker, 'minColor').onChange(function () {
-          minColor = colorPicker.minColor;
+      var cong = new config();
+      gui.addColor(cong, 'minColor').onChange(function () {
+          minColor = cong.minColor;
       });
-      gui.addColor(colorPicker, 'maxColor').onChange(function () {
-          maxColor = colorPicker.maxColor;
+      gui.addColor(cong, 'maxColor').onChange(function () {
+          maxColor = cong.maxColor;
+      });
+      gui.add(cong, 'type', ['sin wave', 'simple sin wave', 'simple butterfly', 'complex butterfly']).onChange(function () {
+          switch (cong.type) {
+              case 'sin wave':
+                  type = 0;
+                  time = 0;
+                  break;
+              case 'simple sin wave':
+                  type = 1;
+                  time = 0;
+                  break;
+              case 'simple butterfly':
+                  type = 2;
+                  time = 0;
+                  break;
+              case 'complex butterfly':
+                  type = 3;
+                  time = 0;
+                  break;
+          }
       });
 
       init();
@@ -146,9 +190,33 @@
 
     context.uniform3fv(u_minColorLocation, minColor);
     context.uniform3fv(u_maxColorLocation, maxColor);
+    
+    if (type == 2){
+        time += timeDelt;
+        if (time > 3.14159*4.0)
+            timeDelt = -0.05;
+        if (time < 0)
+            timeDelt = 0.05;
+        context.uniform1f(u_timeLocation, time);
+    }
+    else if (type == 3) {
+        var ratio = Math.abs(time - 5.0) / 5.0;
+        if (ratio > 0.1)
+            time += 0.1 * (1 + ratio);
+        else if (ratio > 0.05)
+            time += 0.005 * (1 + ratio);
+        else
+            time += 0.001 * (1 + ratio);
 
-    time += 0.01;
-    context.uniform1f(u_timeLocation, time);
+        time = time > 10 ? 0 : time;
+        context.uniform1f(u_timeLocation, time - 5);
+    }
+    else {
+        time += 0.01;
+        context.uniform1f(u_timeLocation, time);
+    }
+
+    context.uniform1i(u_typeLocation, type);
 
     window.requestAnimFrame(animate);
   }
@@ -167,6 +235,8 @@
 
 	u_minColorLocation = context.getUniformLocation(program, "u_minColor");
 	u_maxColorLocation = context.getUniformLocation(program, "u_maxColor");
+
+	u_typeLocation = context.getUniformLocation(program, "u_type");
 
     context.useProgram(program);
   }
