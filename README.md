@@ -100,8 +100,6 @@ Extra Feature:
 
 Only the ocean should be animated here. So I use `u_EarthSpec` to determine if a fragment is on ocean or land. If it is in ocean, I use the perlin noise the get an offset position of it. And check the new position whether it is also in the ocean by 'u_EarthSpec'. If it is, I will replace the original texture with the offset one.
 
-All the determination is based on the 'u_EarthSpec', which, however, does not totally separate land and ocean space. So there's some artefacts in the result image.
-
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part2/ocean.JPG)
 
 * user interface
@@ -130,7 +128,7 @@ It's a library to visualize realize fps and timing.
 
 * perlin noise 
 
-https://github.com/ashima/webgl-noise/blob/master/src/classicnoise3D.glsl
+https://github.com/ashima/webgl-noise/blob/master/src/noise3D.glsl
 
 I use the perlin noise to get an offset position when implementing water animation.
 
