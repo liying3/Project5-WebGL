@@ -82,19 +82,17 @@ Implemented the following basic features:
 * Moving clouds
 
 Here are some rendered images:
+Bump mapped terrain
 
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part2/bump.JPG)
 
-Bump mapped terrain
+Night-time lights
 
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part2/night.JPG)
 
-Night-time lights
-
-![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part2/cloud.JPG)
-
 Rim lighting and cloud layer
 
+![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part2/cloud.JPG)
 
 Extra Feature:
 * Procedural water rendering and animation using perlin noise 
