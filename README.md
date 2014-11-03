@@ -5,7 +5,7 @@ CIS565: Project 5: WebGL
 INTRODUCTION:
 -------------------------------------------------------------------------------
 
-There're two parts in this project. The first part is the Image Processor, and the second part is a Wave Vertex Shader.
+There are two parts in this project. The first part is the Image Processor, and the second part is a Wave Vertex Shader.
 
 In the first part of this project, I implemented a GLSL vertex shader to create a dynamic wave animation using code that runs entirely on the GPU.
 
@@ -65,13 +65,14 @@ float height = tmp * sin((position.x + position.y) / u_time);
 	
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part1/bt2.JPG)
 
-* user interface
+* User Interface
+
 User can user color picker to change the color of the grid and also the type of dynamic wave animation.
 
 -------------------------------------------------------------------------------
 PART 2 Features
 -------------------------------------------------------------------------------
-http://liying3.github.io/Project5-WebGL/
+Website: http://liying3.github.io/Project5-WebGL/
 
 Implemented the following basic features:
 * Bump mapped terrain
@@ -94,12 +95,13 @@ Night-time lights
 
 Rim lighting and cloud layer
 
+
 Extra Feature:
 * Procedural water rendering and animation using perlin noise 
 
-Only the ocean should be animated here. So I use `u_EarthSpec` to determine if a fragment is on ocean or land. If it is in ocean, I use the perlin noise the get an offset position of it. And check the new position whether it is also in the ocean by 'u_EarthSpec'. If it is, I will replace the origianl texture with the offset one.
+Only the ocean should be animated here. So I use `u_EarthSpec` to determine if a fragment is on ocean or land. If it is in ocean, I use the perlin noise the get an offset position of it. And check the new position whether it is also in the ocean by 'u_EarthSpec'. If it is, I will replace the original texture with the offset one.
 
-However, all the determination is based on the 'u_EarthSpec', which it is not toally seperate land and ocean space. So there's some artifacts in the result image.
+All the determination is based on the 'u_EarthSpec', which, however, does not totally separate land and ocean space. So there's some artefacts in the result image.
 
 ![ScreenShot](https://github.com/liying3/Project5-WebGL/blob/master/result/part2/ocean.JPG)
 
