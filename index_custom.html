@@ -1,7 +1,7 @@
 <html>
 
 <head>
-<title>Vertex Wave</title>
+<title>My Wave</title>
 <meta charset ="utf-8">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">  <!-- Use Chrome Frame in IE --> 
 </head>
@@ -28,9 +28,8 @@
     void main(void)
     {
             // NOTE : according to the WebGL standard, 0.0f is not accepted
-          float s_contrib = sin(position.x*2.0*3.14159 + u_time);
-          float t_contrib = cos(position.y*2.0*3.14159 + u_time);
-          float height = s_contrib*t_contrib;
+          float tmp = (pow(position.x,2.0) - pow(position.y,2.0)) / (pow(position.x,2.0) + pow(position.y,2.0));
+          float height = tmp * sin((position.x + position.y) / u_time);
 
             // NOTE : gl_Position is always a vec4
 		  gl_Position = u_modelViewPerspective * vec4(vec3(position, height), 1.0);
@@ -147,8 +146,16 @@
     context.uniform3fv(u_minColorLocation, minColor);
     context.uniform3fv(u_maxColorLocation, maxColor);
 
-    time += 0.01;
-    context.uniform1f(u_timeLocation, time);
+    var ratio = Math.abs(time - 5.0) / 5.0;
+    if (ratio > 0.1)
+        time += 0.1 * (1 + ratio);
+    else if (ratio > 0.05)
+        time += 0.005 * (1 + ratio);
+    else 
+        time += 0.001 * (1 + ratio);
+
+    time = time > 10 ? 0 : time;
+    context.uniform1f(u_timeLocation, time-5);
 
     window.requestAnimFrame(animate);
   }
