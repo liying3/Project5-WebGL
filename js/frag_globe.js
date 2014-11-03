@@ -388,7 +388,7 @@
 	var gui = new dat.GUI();
     var cong = new config();
 	gui.add(cong, 'cloud').onChange(function () {
-		cloudDisplay = cong.cloudDisplay;
+		cloudDisplay = cong.cloud;
 	});
 	gui.add(cong, 'movingCloud').onChange(function () {
 		movingCloudDisplay = cong.movingCloud;
